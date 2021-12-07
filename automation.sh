@@ -48,6 +48,7 @@ else
     apt install awscli -y
 fi
 
+# Task3 
 
 #check if s3 bucket indicated exists. If not exit indicating error
 s3bucketstat=$(aws s3 ls | grep -i "$s3bucket")
@@ -72,3 +73,30 @@ else
 fi
 
 exit 0
+
+#check if cron job exists. Create if not already present
+cronfile=/etc/cron.d/automation
+fileloc=$(pwd)
+if test -f "$cronfile"; then
+    echo "$cronfile exists..."
+else
+    echo "Creating cronjob ..."
+    echo "0 0 * * * root $fileloc/automation.sh" > $cronfile
+    chmod 600 $cronfile
+fi
+
+exit 0
+
+#check if cron job exists. Create if not already present
+cronfile=/etc/cron.d/automation
+fileloc=$(pwd)
+if test -f "$cronfile"; then
+    echo "$cronfile exists..."
+else
+    echo "Creating cronjob ..."
+    echo "0 0 * * * root $fileloc/automation.sh" > $cronfile
+    chmod 600 $cronfile
+fi
+
+exit 0
+
