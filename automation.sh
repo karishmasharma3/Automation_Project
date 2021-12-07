@@ -4,7 +4,7 @@
 #update the variable with the s3 bucket name in aws
 s3_bucket="upgradkarishma"
 #provide the prefix that needs to be used to archive file on s3 bucket
-fileprefix="Karishma"
+name="Karishma"
 
 # Download package information from all configured sources
 apt update -y
@@ -62,7 +62,7 @@ DIR="/var/log/apache2/"
 if [[ -d "$DIR" ]]; then
     echo "Archiving log files in ${DIR}..."
     timestamp=$(date '+%d%m%Y-%H%M%S')
-    filename=$fileprefix"-httpd-logs-"$timestamp
+    filename=$name"-httpd-logs-"$timestamp
     find $DIR -name "*.log" | tar -zcvf /tmp/$filename.tar  -P  -T -
     gzip /tmp/$filename.tar
     aws s3 cp /tmp/$filename.tar.gz s3://${s3_bucket}/${filename}.tar.gz
